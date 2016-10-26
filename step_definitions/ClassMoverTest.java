@@ -5,14 +5,17 @@ import cucumber.api.java.en.*;
 import cucumber.api.java.Before;
 
 import static org.junit.Assert.*;
+
+import java.io.IOException;
 /**
  * @author Sebastian Snyder
  */
 public class ClassMoverTest
 {
 	@Before
-	public void Before()
+	public void Before() throws Exception
 	{
+		CSV.DEBUG_MODE = true;
 		ClassMover C = new ClassMover();
 		C.main("IT101.01");
 	}
