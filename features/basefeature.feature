@@ -2,4 +2,4 @@
 Feature: Base Feature
 
 Scenario: Base Scenario
-	Given Base Given
+	Given it didn't crash!
