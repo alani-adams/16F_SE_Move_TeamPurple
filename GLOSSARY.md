@@ -10,4 +10,5 @@
 **Term Code**  
     A six-digit numeric string, comprised of a four-digit year and a two-digit semester code. For example, 201610 would be the Fall semester of 2016.
 
-**Semester Code**A two-digit numeric string that is equal to "10", "20", or "30". These translate to Fall, Spring, and Summer semesters respectively
+**Semester Code**
+A two-digit numeric string that is equal to "10", "20", or "30". These translate to Fall, Spring, and Summer semesters respectively
