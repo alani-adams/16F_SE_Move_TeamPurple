@@ -13,6 +13,7 @@
 //
 package implementation;
 
+import java.io.IOException;
 
 /**
  * 
@@ -20,6 +21,13 @@ package implementation;
  */
 public class ClassMover
 {
+	private CSV data;
+	
+	public ClassMover() throws IOException
+	{
+		data = CSV.open("cs374_anon-modified.csv");
+	}
+	
 	public static void main(String... args)
 	{
 		System.out.println(args[0]);
