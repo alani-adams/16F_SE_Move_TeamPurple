@@ -31,7 +31,7 @@ public class ClassMover
 											"Sunday Ind1", "Ovrall Cumm GPA  Hours Earned", "Section Max Enrollment"};
 
 		data = CSV.openColumns("cs374_anon-modified.csv", columnArrays);
-		data.printToStream(System.out, 6, 1, 50);
+		//data.printToStream(System.out, 6, 1, 50);
 	}
 
 	public static void main(String... args) throws Exception
