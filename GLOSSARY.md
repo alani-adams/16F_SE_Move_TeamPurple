@@ -11,7 +11,7 @@
     The two digit number unique to each section of a course (the ".01" in "IT101.01").
     
 **Course**  
-    The code that specifies the exact section of a course, of which a student can be enrolled. It combines Course Code and Course Section, such as "IT101.01".
+    The code that specifies the exact section of a course, of which a student can be enrolled. It combines Semester Code, Course Code and Course Section, such as "201310 IT101.01".
     
 **Semester Code**  
     A two-digit numeric string that is equal to "10", "20", or "30" exclusively. These translate to Fall, Spring, and Summer semesters respectively.
