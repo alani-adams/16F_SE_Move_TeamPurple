@@ -25,11 +25,19 @@ public class ClassMover
 	
 	public ClassMover() throws IOException
 	{
-		data = CSV.open("cs374_anon-modified.csv");
+		String[] columnArrays = new String[] {"Term Code", "Class Code", "Subject Code", "Course Number", "Section Number",
+											"Instructor Name", "Banner ID", "Begin Time 1", "End Time1", "Bldg Code1", "Room Code1",
+											"Monday Ind1", "Tuesday Ind1", "Wednesday Ind1", "Thursday Ind1", "Friday Ind1", "Saturday Ind1",
+											"Sunday Ind1", "Ovrall Cumm GPA  Hours Earned", "Section Max Enrollment"};
+
+		data = CSV.openColumns("cs374_anon-modified.csv", columnArrays);
+		data.printToStream(System.out, 6, 1, 50);
 	}
-	
-	public static void main(String... args)
+
+	public static void main(String... args) throws Exception
 	{
+		new ClassMover();
+
 		System.out.println(args[0]);
 	}
 }
