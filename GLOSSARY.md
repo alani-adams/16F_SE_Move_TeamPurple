@@ -13,8 +13,9 @@
 **Course**  
     The code that specifies the exact section of a course, of which a student can be enrolled. It combines Course Code and Course Section, such as "IT101.01".
     
-**Semester Code**
-    
+**Semester Code**  
+    A two-digit numeric string that is equal to "10", "20", or "30" exclusively. These translate to Fall, Spring, and Summer semesters respectively.    
+
 **Semester Code**
     A two-digit numeric string that is equal to "10", "20", or "30". These translate to Fall, Spring, and Summer semesters respectively.
 
