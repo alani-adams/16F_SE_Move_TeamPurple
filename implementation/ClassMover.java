@@ -14,6 +14,8 @@
 package implementation;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * 
@@ -22,6 +24,8 @@ import java.io.IOException;
 public class ClassMover
 {
 	private CSV data;
+	private HashMap<String,Student> Students;
+	private HashMap<String,Course> Courses;
 	
 	public ClassMover() throws IOException
 	{
@@ -32,12 +36,14 @@ public class ClassMover
 
 		data = CSV.openColumns("cs374_anon-modified.csv", columnArrays);
 		//data.printToStream(System.out, 6, 1, 50);
+		for(int i = 0;i < data.columnCount();i++)
+		{
+			Student S = new Student(data.getDataPoint("Banner ID", i));
+		}
 	}
 
 	public static void main(String... args) throws Exception
 	{
-		new ClassMover();
-
-		System.out.println(args[0]);
+		ClassMover Mover = new ClassMover();
 	}
 }
