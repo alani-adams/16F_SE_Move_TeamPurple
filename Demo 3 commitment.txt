@@ -1,1 +1,1 @@
-We commit to inputing a time slot for a student or professor to see if they are in a class at that time.
+We commit to inputing a time slot for a student or professor and return if they are in a class or free at that time.
