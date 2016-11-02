@@ -14,11 +14,25 @@ public class ClassMover
 	private final HashMap<String,Course> Courses;
     private final HashMap<String,Professor> Professors;
 	private static CSV data = null;
+	
+	public HashMap<String,Course> getCoursesMap()
+	{
+		return Courses;
+	}
+	public HashMap<String, Student> getStudentsMap()
+	{
+		return Students;
+	}
+	public HashMap<String, Professor> getProfessorsMap()
+	{
+		return Professors;
+	}
+	
 	public ClassMover() throws IOException
 	{
-		Students = new HashMap<String,Student>();
-		Courses = new HashMap<String,Course>();
-		Professors = new HashMap<String,Professor>();
+		Students = new HashMap<String,Student>(75000);
+		Courses = new HashMap<String,Course>(20000);
+		Professors = new HashMap<String,Professor>(500);
 		
 		
 		String[] columnArrays = new String[] {"Term Code", "Class Code", "Subject Code", "Course Number", "Section Number",
@@ -28,10 +42,17 @@ public class ClassMover
 		if(data == null)
 			data = CSV.openColumns("cs374_anon-modified.csv", columnArrays);
 		//data.printToStream(System.out, 6, 1, 50);
-		for(int i = 0;i < data.columnCount();i++)
+		for(int i = 0;i < data.rowCount();i++)
 		{
-            String courseID = data.getDataPoint("Subject Code", i) + data.getDataPoint("Course Number", i) + "." + data.getDataPoint("Section Number", i) + " ";
-            courseID += String.format("%2s", data.getDataPoint("Term Code",i)).replaceAll(" ", "0");
+
+            String TimeStart = data.getDataPoint("Begin Time 1",i);
+            String TimeEnd = data.getDataPoint("End Time1", i);
+            
+            if(TimeStart.equals("") || TimeEnd.equals(""))
+            	continue;
+            
+            String courseID = data.getDataPoint("Term Code",i) + " " + data.getDataPoint("Subject Code", i) + data.getDataPoint("Course Number", i)
+            			+ "." + String.format("%2s", data.getDataPoint("Section Number", i)).replaceFirst(" ", "0");
             String bannerID = data.getDataPoint("Banner ID", i);
             String profName = data.getDataPoint("Instructor Name", i);
             Student S;		Professor P;		Course C;
@@ -62,14 +83,11 @@ public class ClassMover
                 HasDay[4] = !data.getDataPoint("Thursday Ind1", i).equals("");
                 HasDay[5] = !data.getDataPoint("Friday Ind1", i).equals("");
                 HasDay[6] = !data.getDataPoint("Saturday Ind1", i).equals("");
-                
-                int TimeStart = Integer.parseInt(data.getDataPoint("Begin Time 1",i));
-                int TimeEnd = Integer.parseInt(data.getDataPoint("End Time1", i));
-                
+	            
                 for(int d = 0;d < HasDay.length;d++)
                 {
                 	if(HasDay[d])
-                		C.setClassPeriod(Day.values()[d],TimeStart,TimeEnd);
+                		C.setClassPeriod(Day.values()[d],Integer.parseInt(TimeStart),Integer.parseInt(TimeEnd));
                 }
                 
                 Courses.put(courseID,C);
@@ -77,6 +95,7 @@ public class ClassMover
             else C = Courses.get(courseID);
                
             C.addStudent(S);
+            S.addCourse(C);
 		}
         
 	}
@@ -84,6 +103,6 @@ public class ClassMover
 	public static void main(String... args) throws Exception
 	{
 		ClassMover Mover = new ClassMover();
-		System.out.println(Mover);
+		//System.out.println(String.format("%2s", data.getDataPoint("Term Code", 1)).replaceFirst(" ","0"));
 	}
 }

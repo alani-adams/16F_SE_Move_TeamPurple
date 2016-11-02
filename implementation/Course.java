@@ -47,13 +47,8 @@ public class Course
 	 */
 	public void addStudent(Student s)
 	{
-		if(Students.contains(s))
-		{
-			Students.add(s);
-			s.addCourse(this);
-		}
-	}
-
+		Students.add(s);
+	}	
 	/**
 	 * Sets the timeslot of this class for a given day of the week
 	 * @param day The day to set

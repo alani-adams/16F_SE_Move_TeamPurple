@@ -34,11 +34,15 @@ public class Student
 	 */
 	public void addCourse(Course c)
 	{
-		if(Courses.contains(c))
-		{
-			Courses.add(c);
-			c.addStudent(this);
-		}
+		Courses.add(c);
 	}
 
+	/**
+	 * Gets the set of courses this student is taking
+	 * @return a HashSet of courses this student is taking
+	 */
+	public HashSet<Course> getCourseSet()
+	{
+		return Courses;
+	}
 }
