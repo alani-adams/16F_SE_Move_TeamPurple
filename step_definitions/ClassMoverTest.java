@@ -19,17 +19,22 @@ public class ClassMoverTest
 		ClassMover C = new ClassMover();
 		C.main("IT101.01");
 	}
-	@Given("it didn't crash!")
-	public void Given()
+
+
+	@Given("^A \"(.*?)\" teaches \"(.*?)\"$")
+	public void aTeaches(String arg1, String arg2) throws Throwable 
 	{
-		assertTrue(true);
+    	// Write code here that turns the phrase above into concrete actions
+    	throw new PendingException();
 	}
+
 	@Given("^Student with \"(.*?)\" is enrolled \"(.*?)\"$")
-    	public void studentWithIsEnrolled(String banner, String course) throws Throwable 
-    	{
-        
-        //stuff here
-    	}
+	public void studentWithIsEnrolled(String arg1, String arg2) throws Throwable 
+	{
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
 }
 
 /**
