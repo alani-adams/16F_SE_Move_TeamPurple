@@ -22,7 +22,7 @@ public class ClassMoverTest
 
 
 	@Given("^A \"(.*?)\" teaches \"(.*?)\"$")
-	public void aTeaches(String profName, String course) throws Throwable 
+	public void aTeaches(String professor, String course) throws Throwable 
 	{
     	// Write code here that turns the phrase above into concrete actions
     	throw new PendingException();
