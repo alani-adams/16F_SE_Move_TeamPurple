@@ -6,7 +6,7 @@
     The code that can be used to describe a course, such as "IT101".
     
 **Course Domain**  
-    The word prefix portion of the course code (the "IT" in "IT101).
+    The word prefix portion of the course code (the "IT" in "IT101").
     
 **Course Number**  
     The three digit number unique to each course within each domain (the "101" in "IT101").
