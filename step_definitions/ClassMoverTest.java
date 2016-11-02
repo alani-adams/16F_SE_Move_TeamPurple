@@ -25,14 +25,14 @@ public class ClassMoverTest
 	public void aTeaches(String professor, String course) throws Throwable 
 	{
     	// Write code here that turns the phrase above into concrete actions
-    	throw new PendingException();
+    	
 	}
 
 	@Given("^Student with \"(.*?)\" is enrolled \"(.*?)\"$")
 	public void studentWithIsEnrolled(String banner, String course) throws Throwable 
 	{
 	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    
 	}
 
 }
