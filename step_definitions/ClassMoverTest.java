@@ -22,14 +22,14 @@ public class ClassMoverTest
 
 
 	@Given("^A \"(.*?)\" teaches \"(.*?)\"$")
-	public void aTeaches(String arg1, String arg2) throws Throwable 
+	public void aTeaches(String profName, String course) throws Throwable 
 	{
     	// Write code here that turns the phrase above into concrete actions
     	throw new PendingException();
 	}
 
 	@Given("^Student with \"(.*?)\" is enrolled \"(.*?)\"$")
-	public void studentWithIsEnrolled(String arg1, String arg2) throws Throwable 
+	public void studentWithIsEnrolled(String banner, String course) throws Throwable 
 	{
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
