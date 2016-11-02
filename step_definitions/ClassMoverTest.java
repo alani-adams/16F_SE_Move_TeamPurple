@@ -24,8 +24,6 @@ public class ClassMoverTest
 	{
     	Professor p = C.getProfessorsMap().get(professor);
     	Course c = C.getCoursesMap().get(course);
-    	//for(Course c2: C.getCoursesMap().values())
-    	//	System.out.println(") -> "+c2.getCourseID());
     	Assert.assertTrue(c.getInstructor() == p);
 	}
 
@@ -34,9 +32,6 @@ public class ClassMoverTest
 	{
 	    Student s = C.getStudentsMap().get(banner);
 	    Course c = C.getCoursesMap().get(course);
-	    System.out.println(banner+":");
-	    for(Course c2:s.getCourseSet())
-	    	System.out.println("  "+c2.getCourseID());
 	    Assert.assertTrue(s.getCourseSet().contains(c));
 	}
 
