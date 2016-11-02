@@ -24,6 +24,12 @@ public class ClassMoverTest
 	{
 		assertTrue(true);
 	}
+	@Given("^Student with \"(.*?)\" is enrolled \"(.*?)\"$")
+    public void studentWithIsEnrolled(String banner, String course) throws Throwable 
+    	{
+        
+        //stuff here
+    	}
 }
 
 /**
