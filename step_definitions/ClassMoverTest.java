@@ -1,38 +1,43 @@
 package step_definitions;
 
 import implementation.*;
+import junit.framework.Assert;
 import cucumber.api.java.en.*;
 import cucumber.api.java.Before;
-
-import static org.junit.Assert.*;
-
-import java.io.IOException;
 /**
  * @author Sebastian Snyder
  */
 public class ClassMoverTest
 {
+	private ClassMover C;
+	
 	@Before
 	public void Before() throws Exception
 	{
 		CSV.DEBUG_MODE = true;
-		ClassMover C = new ClassMover();
-		C.main("IT101.01");
+		C = new ClassMover();
 	}
 
 
 	@Given("^A \"(.*?)\" teaches \"(.*?)\"$")
 	public void aTeaches(String professor, String course) throws Throwable 
 	{
-    	// Write code here that turns the phrase above into concrete actions
-    	
+    	Professor p = C.getProfessorsMap().get(professor);
+    	Course c = C.getCoursesMap().get(course);
+    	//for(Course c2: C.getCoursesMap().values())
+    	//	System.out.println(") -> "+c2.getCourseID());
+    	Assert.assertTrue(c.getInstructor() == p);
 	}
 
 	@Given("^Student with \"(.*?)\" is enrolled \"(.*?)\"$")
 	public void studentWithIsEnrolled(String banner, String course) throws Throwable 
 	{
-	    // Write code here that turns the phrase above into concrete actions
-	    
+	    Student s = C.getStudentsMap().get(banner);
+	    Course c = C.getCoursesMap().get(course);
+	    System.out.println(banner+":");
+	    for(Course c2:s.getCourseSet())
+	    	System.out.println("  "+c2.getCourseID());
+	    Assert.assertTrue(s.getCourseSet().contains(c));
 	}
 
 }
