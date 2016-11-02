@@ -7,11 +7,30 @@ package implementation;
  */
 public class ScheduleData
 {
-	private final TimeRange[] Days;
+	private final TimeRange[] Data;
 	
 	public ScheduleData()
 	{
-		Days = new TimeRange[7];
+		Data = new TimeRange[Day.values().length];
+	}
+	
+	public void setData(Day D, byte StartHr, byte StartMn, byte EndHr, byte EndMn)
+	{
+		if(Data[D.ordinal()] == null)
+		{
+			TimeRange T = new TimeRange();
+			T.StartHour = StartHr;		T.StartMinute = StartMn;
+			T.EndHour = EndHr;			T.EndMinute = EndMn;
+			Data[D.ordinal()] = T;
+		}
+		else
+		{
+			throw new IllegalStateException("Course Data for "+D.name()+" defined twice.");
+		}
+	}
+
+	public void setData(Day day, int Sh, int Sm, int Eh, int Em) {
+		setData(day,(byte)Sh,(byte)Sm,(byte)Eh,(byte)Em);
 	}
 }
 

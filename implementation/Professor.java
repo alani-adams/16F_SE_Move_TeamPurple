@@ -10,12 +10,27 @@ import java.util.HashSet;
  */
 public class Professor
 {
-	private String Name;
-	private HashSet<Course> Courses;
+	private final String NAME;
+	private final HashSet<Course> Courses;
 	
-	public Professor(String name) {
-        Name = name;
+	public Professor(String name)
+	{
+        NAME = name;
         Courses = new HashSet<Course>();
+	}
+
+	/**
+	 * Gets this Professor's name.
+	 * @return this Professor's name.
+	 */
+	public String getName()
+	{
+		return NAME;
+	}
+
+	public void addCourse(Course c)
+	{
+		Courses.add(c);
 	}
 
 }

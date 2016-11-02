@@ -10,13 +10,35 @@ import java.util.HashSet;
  */
 public class Student
 {
-	private HashSet<Course> Courses;
-	private String Banner;
+	private final HashSet<Course> Courses;
+	private final String BANNER;
     
 	public Student(String banner)
 	{
-		Banner = banner;
+		BANNER = banner;
 		Courses = new HashSet<Course>();
+	}
+
+	/**
+	 * Gets this Student's Banner ID.
+	 * @return the Student's Banner ID.
+	 */
+	public String getBanner()
+	{
+		return BANNER;
+	}
+
+	/**
+	 * Adds a course to the list of this student's courses
+	 * @param course The course to add
+	 */
+	public void addCourse(Course c)
+	{
+		if(Courses.contains(c))
+		{
+			Courses.add(c);
+			c.addStudent(this);
+		}
 	}
 
 }
