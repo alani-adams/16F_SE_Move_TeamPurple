@@ -13,8 +13,9 @@ public class Professor
 	private String Name;
 	private HashSet<Course> Courses;
 	
-	public Professor() {
-		// TODO Auto-generated constructor stub
+	public Professor(String name) {
+        Name = name;
+        Courses = new HashSet<Course>();
 	}
 
 }

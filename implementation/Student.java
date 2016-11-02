@@ -12,7 +12,7 @@ public class Student
 {
 	private HashSet<Course> Courses;
 	private String Banner;
-	
+    
 	public Student(String banner)
 	{
 		Banner = banner;

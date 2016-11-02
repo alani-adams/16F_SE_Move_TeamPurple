@@ -14,9 +14,12 @@ public class Course
 	private Professor Instructor;
 	private ScheduleData CourseTimes;
 	
-	public Course()
+	public Course(String courseID, HashSet<Student> students, Professor instructor, ScheduleData courseTimes)
 	{
-		
+        CourseID = courseID;
+        Students = students;
+        Instructor = instructor;
+        CourseTimes = courseTimes;
 	}
 
 }

@@ -26,6 +26,7 @@ public class ClassMover
 	private CSV data;
 	private HashMap<String,Student> Students;
 	private HashMap<String,Course> Courses;
+    private HashMap<String,Professor> Professors;
 	
 	public ClassMover() throws IOException
 	{
@@ -38,8 +39,23 @@ public class ClassMover
 		//data.printToStream(System.out, 6, 1, 50);
 		for(int i = 0;i < data.columnCount();i++)
 		{
-			Student S = new Student(data.getDataPoint("Banner ID", i));
+            String courseID = data.getDataPoint("Subject Code", i) + data.getDataPoint("Course Number", i) + "." + data.getDataPoint("Section Number", i) + " ";
+            courseID += String.format("%02s", data.getDataPoint("Term Code",i));
+            Student S;
+            Professor P;
+			if(!Students.containsKey(data.getDataPoint("Banner ID", i)))
+                S = new Student(data.getDataPoint("Banner ID", i));
+            else
+               S = Students.get(data.getDataPoint("Banner ID", i));
+            if(!Professors.containsKey(data.getDataPoint("Instructor Name", i)))
+                  P = new Professor(data.getDataPoint("Instructor Name", i));
+                else
+                  P = Professors.get(data.getDataPoint("Instructor Name", i));
+            
+               
+            
 		}
+        
 	}
 
 	public static void main(String... args) throws Exception
