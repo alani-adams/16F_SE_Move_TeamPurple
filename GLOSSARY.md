@@ -33,9 +33,7 @@
     A six-digit numeric string, comprised of a four-digit year and a two-digit semester code. For example, 201610 would be the Fall semester of 2016.
 
 **Time Code**
-    An integer t where (t div 100) is the hour of the day and (t mod 100) is the minute of the day.
-
-For example: 830 is 8:30 AM and 1530 is 3:30 PM.
+    An integer t where (t div 100) is the hour of the day and (t mod 100) is the minute of the day (for example: 830 is 8:30 AM and 1530 is 3:30 PM.)
     
 **Time Range**
     Two time codes where the lesser one represents a start time and the greater one represents an end time.
