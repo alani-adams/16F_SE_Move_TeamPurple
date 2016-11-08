@@ -49,7 +49,7 @@ public class ClassMoverTest
     	throw new PendingException();
 	}
 	@Given("^Professor \"(.*?)\" on \"(.*?)\" between \"(.*?)\" and \"(.*?)\" in term \"(.*?)\"$")
-	public void professorOnBetweenAndInTerm(String arg1, String arg2, String arg3, String arg4, String arg5) throws Throwable 
+	public void professorOnBetweenAndInTerm(String prof, String day, String start, String end, String term) throws Throwable 
 	{
     	// Write code here that turns the phrase above into concrete actions
     	throw new PendingException();
