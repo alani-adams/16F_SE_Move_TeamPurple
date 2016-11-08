@@ -36,13 +36,13 @@ public class ClassMoverTest
 	}
 	
 	@Given("^Student \"(.*?)\" on \"(.*?)\" between \"(.*?)\" and \"(.*?)\" in term \"(.*?)\"$")
-	public void studentOnBetweenAndInTerm(String arg1, String arg2, String arg3, String arg4, String arg5) throws Throwable {
+	public void studentOnBetweenAndInTerm(String banner, String day, String start, String end, String term) throws Throwable {
     	// Write code here that turns the phrase above into concrete actions
     	throw new PendingException();
 	}
 
 	@Then("^the student \"(.*?)\" available$")
-	public void theStudentAvailable(String arg1) throws Throwable {
+	public void theStudentAvailable(String availability) throws Throwable {
     	// Write code here that turns the phrase above into concrete actions
     	throw new PendingException();
 	}
