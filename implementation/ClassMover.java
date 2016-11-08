@@ -35,13 +35,16 @@ public class ClassMover
 		Professors = new HashMap<String,Professor>(500);
 		
 		
-		String[] columnArrays = new String[] {"Term Code", "Class Code", "Subject Code", "Course Number", "Section Number",
+		String[] columnNames = new String[] {"Term Code", "Class Code", "Subject Code", "Course Number", "Section Number",
 											"Instructor Name", "Banner ID", "Begin Time 1", "End Time1", "Bldg Code1", "Room Code1",
 											"Monday Ind1", "Tuesday Ind1", "Wednesday Ind1", "Thursday Ind1", "Friday Ind1", "Saturday Ind1",
 											"Sunday Ind1", "Ovrall Cumm GPA  Hours Earned", "Section Max Enrollment"};
 		if(data == null)
-			data = CSV.openColumns("cs374_f16_anon.csv", columnArrays);
-		//data.printToStream(System.out, 6, 1, 50);
+		{
+			data = CSV.openColumns("cs374_f16_anon.csv",columnNames);
+			//data.printToStream(System.out, 10, 1, 50);
+		}
+		
 		for(int i = 0;i < data.rowCount();i++)
 		{
 
@@ -62,6 +65,7 @@ public class ClassMover
             
 			if(!Students.containsKey(bannerID))
 			{
+				//System.out.println("ADDED "+bannerID);
                 S = new Student(bannerID);
                 Students.put(bannerID, S);
 			}
