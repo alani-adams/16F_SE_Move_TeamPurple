@@ -34,8 +34,18 @@ Scenario Outline: Student enrolled in Course
 
 
 Scenario Outline:
-    Given Student "<banner>" on "<day>" between "<start>" and "<end>"
+    Given Student "<banner>" on "<day>" between "<start>" and "<end>" in term "<term>"
     Then the student "<availability>" available
 
-    Examples:
-    | banner    | day | start | end | availability |
+    Examples: Student availability
+    | banner    | day | start | end  | term   | availability |
+    | 800457    | W   | 800   | 1000 | 201710 | is           |
+    | 800457    | T   | 1900  | 2000 | 201710 | is not       |
+    | 926944    | W   | 800   | 1000 | 201710 | is           |
+    | 662102    | F   | 915   | 930  | 201710 | is not       |
+    | 662102    | R   | 915   | 930  | 201710 | is           |
+    | 958628    | T   | 810   | 1000 | 201710 | is not       |
+    | 958628    | M   | 1400  | 1410 | 201710 | is not       |
+    | 958628    | F   | 851   | 900  | 201710 | is           |
+    | 534162    | M   | 810   | 1700 | 201710 | is not       |
+    | 454716    | R   | 800   | 2000 | 201710 | is           |
