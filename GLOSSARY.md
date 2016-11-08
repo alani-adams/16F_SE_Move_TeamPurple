@@ -38,3 +38,6 @@
     
 **Time Range**  
     Two time codes where the lesser one represents a start time and the greater one represents an end time.
+    
+**Day**
+    One letter representaion of what day a course meets.
