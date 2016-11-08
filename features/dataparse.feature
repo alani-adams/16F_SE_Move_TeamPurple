@@ -1,4 +1,4 @@
-#Author: Sebastian Snyder, Cole Spears
+#Author: Sebastian Snyder, Cole Spears, Alani Peters
 Feature: Base Feature
 
 Scenario Outline: Student Availability
