@@ -11,13 +11,13 @@ import java.util.HashMap;
 public class ClassMover
 {
 	private final HashMap<String,Student> Students;
-	private final HashMap<String,Course> Courses;
+	private final HashMap<String,HashMap<String,Course>> Courses;
     private final HashMap<String,Professor> Professors;
 	private static CSV data = null;
 	
-	public HashMap<String,Course> getCoursesMap()
+	public HashMap<String,Course> getCoursesMap(String termcode)
 	{
-		return Courses;
+		return Courses.get(termcode);
 	}
 	public HashMap<String, Student> getStudentsMap()
 	{
@@ -30,8 +30,8 @@ public class ClassMover
 	
 	public ClassMover() throws IOException
 	{
-		Students = new HashMap<String,Student>(75000);
-		Courses = new HashMap<String,Course>(20000);
+		Students = new HashMap<String,Student>();
+		Courses = new HashMap<String,HashMap<String,Course>>();
 		Professors = new HashMap<String,Professor>(500);
 		
 		
@@ -40,7 +40,7 @@ public class ClassMover
 											"Monday Ind1", "Tuesday Ind1", "Wednesday Ind1", "Thursday Ind1", "Friday Ind1", "Saturday Ind1",
 											"Sunday Ind1", "Ovrall Cumm GPA  Hours Earned", "Section Max Enrollment"};
 		if(data == null)
-			data = CSV.openColumns("cs374_anon-modified.csv", columnArrays);
+			data = CSV.openColumns("cs374_f16_anon.csv", columnArrays);
 		//data.printToStream(System.out, 6, 1, 50);
 		for(int i = 0;i < data.rowCount();i++)
 		{
@@ -51,11 +51,14 @@ public class ClassMover
             if(TimeStart.equals("") || TimeEnd.equals(""))
             	continue;
             
-            String courseID = data.getDataPoint("Term Code",i) + " " + data.getDataPoint("Subject Code", i) + data.getDataPoint("Course Number", i)
+            String TermCode = data.getDataPoint("Term Code",i);
+            String Course = data.getDataPoint("Subject Code", i) + data.getDataPoint("Course Number", i)
             			+ "." + String.format("%2s", data.getDataPoint("Section Number", i)).replaceFirst(" ", "0");
             String bannerID = data.getDataPoint("Banner ID", i);
             String profName = data.getDataPoint("Instructor Name", i);
+            
             Student S;		Professor P;		Course C;
+            HashMap<String,Course> Cmap;
             
 			if(!Students.containsKey(bannerID))
 			{
@@ -70,10 +73,17 @@ public class ClassMover
                 Professors.put(profName, P);
             }
             else P = Professors.get(profName);
-
-            if(!Courses.containsKey(courseID))
+            
+            if(!Courses.containsKey(TermCode))
             {
-                C = new Course(courseID,P);
+            	Cmap = new HashMap<String,Course>();
+            	Courses.put(TermCode, Cmap);
+            }
+            else Cmap = Courses.get(TermCode);
+            	
+            if(!Cmap.containsKey(Course))
+            {
+                C = new Course(TermCode,Course,P);
                 
                 boolean[] HasDay = new boolean[Day.values().length];
                 HasDay[0] = !data.getDataPoint("Sunday Ind1", i).equals("");
@@ -90,9 +100,9 @@ public class ClassMover
                 		C.setClassPeriod(Day.values()[d],Integer.parseInt(TimeStart),Integer.parseInt(TimeEnd));
                 }
                 
-                Courses.put(courseID,C);
+                Cmap.put(Course,C);
             }
-            else C = Courses.get(courseID);
+            else C = Cmap.get(Course);
                
             C.addStudent(S);
             S.addCourse(C);

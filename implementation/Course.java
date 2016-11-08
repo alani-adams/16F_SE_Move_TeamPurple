@@ -1,5 +1,6 @@
 package implementation;
 
+import java.util.Comparator;
 import java.util.HashSet;
 
 /**
@@ -9,18 +10,20 @@ import java.util.HashSet;
  */
 public class Course
 {
-	private final String COURSE_ID;
+	private final String COURSE;
+	private final String TERM_CODE;
 	private final HashSet<Student> Students;
 	private final Professor Instructor;
 	private final ScheduleData CourseTimes;
 
-	public Course(String courseID, Professor p)
+	public Course(String termcode, String course, Professor p)
 	{
-		COURSE_ID = courseID;
+		TERM_CODE = termcode;
+		COURSE = course;
 		Instructor = p;
-		p.addCourse(this);
 		Students = new HashSet<Student>();
 		CourseTimes = new ScheduleData();
+		p.addCourse(this);
 	}
 
 
@@ -30,7 +33,7 @@ public class Course
 	 */
 	public String getCourseID()
 	{
-		return COURSE_ID;
+		return TERM_CODE+" "+COURSE;
 	}
 
 	/**
@@ -59,7 +62,56 @@ public class Course
 	 */
 	public void setClassPeriod(Day day, int timeStart, int timeEnd)
 	{
-		 CourseTimes.setData(day, timeStart/100, timeStart%100,   timeEnd/100, timeEnd%100);
+		 CourseTimes.setData(day, timeStart, timeEnd);
 	}
 
+
+	public String getTermCode()
+	{
+		return TERM_CODE;
+	}
+
+
+	public int getFirstStartTime()
+	{
+		return CourseTimes.getFirstStartTime();
+	}
+
+
+	public static Comparator<Course> comparator()
+	{
+		return CourseComparator.instance;
+	}
+
+
+	public boolean hasTime()
+	{
+		try
+		{
+			getFirstStartTime();
+			return true;
+		}
+		catch(IllegalStateException e)
+		{
+			return false;
+		}
+	}
+
+
+	public boolean SlotFree(Day D, short ST, short ET)
+	{
+		return CourseTimes.SlotFree(D,ST,ET);
+	}
+
+}
+
+class CourseComparator implements Comparator<Course>
+{
+	public static final Comparator<Course> instance = new CourseComparator();
+	private CourseComparator() {}
+	@Override
+	public int compare(Course c1, Course c2)
+	{
+		return c1.getFirstStartTime()-c2.getFirstStartTime();
+	}
 }

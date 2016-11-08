@@ -14,13 +14,13 @@ public class ScheduleData
 		Data = new TimeRange[Day.values().length];
 	}
 	
-	public void setData(Day D, byte StartHr, byte StartMn, byte EndHr, byte EndMn)
+	public void setData(Day D, short StartTime, short EndTime)
 	{
 		if(Data[D.ordinal()] == null)
 		{
 			TimeRange T = new TimeRange();
-			T.StartHour = StartHr;		T.StartMinute = StartMn;
-			T.EndHour = EndHr;			T.EndMinute = EndMn;
+			T.StartTime = StartTime;
+			T.EndTime = EndTime;
 			Data[D.ordinal()] = T;
 		}
 		else
@@ -29,14 +29,33 @@ public class ScheduleData
 		}
 	}
 
-	public void setData(Day day, int Sh, int Sm, int Eh, int Em) {
-		setData(day,(byte)Sh,(byte)Sm,(byte)Eh,(byte)Em);
+	public void setData(Day day, int St, int Et) {
+		setData(day,(short)St,(short)Et);
+	}
+
+	public int getFirstStartTime()
+	{
+		for(int i = 0;i < Day.values().length;i++)
+		{
+			if(Data[i] != null)
+				return Data[i].StartTime;
+		}
+		throw new IllegalStateException("No start time found.");
+	}
+	
+	public boolean SlotFree(Day D, short ST, short ET)
+	{
+		TimeRange T = Data[D.ordinal()];
+		if(T == null)
+			return true;
+		else
+			return (T.StartTime > ET) || (T.EndTime < ST);
 	}
 }
 
 class TimeRange
 {
-	public byte StartHour, StartMinute;
-	public byte EndHour, EndMinute;
+	public short StartTime;
+	public short EndTime;
 }
 
