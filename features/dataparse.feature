@@ -31,3 +31,11 @@ Scenario Outline: Student enrolled in Course
     | 205228    | 201320 COMS211.08 |
     | 334917    | 201320 COMS343.02 |
     | 428315    | 201320 COMS345.01 |
+
+
+Scenario Outline:
+    Given Student "<banner>" on "<day>" between "<start>" and "<end>"
+    Then the student "<availability>" available
+
+    Examples:
+    | banner    | day | start | end | availability |
