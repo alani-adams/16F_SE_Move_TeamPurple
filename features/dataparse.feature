@@ -50,7 +50,7 @@ Scenario Outline:
     | 454716    | R   | 800   | 2000 | 201710 | is           |
     
 Scenario Outline:
-    Given Professor "<name>" on "<day>" between "<start>" and "<end>" in term "<termCode>""
+    Given Professor "<name>" on "<day>" between "<start>" and "<end>" in term "<termCode>"
     Then the Professor "<availability>" available
 
     Examples:
