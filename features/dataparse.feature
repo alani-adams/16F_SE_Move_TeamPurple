@@ -1,4 +1,4 @@
-#Author: Sebastian Snyder, Cole Spears, Alani Peters
+#Author: Sebastian Snyder, Cole Spears
 Feature: Base Feature
 
 Scenario Outline: Student Availability
@@ -7,16 +7,16 @@ Scenario Outline: Student Availability
 
     Examples: Student availability
     | banner    | day | start | end  | term   | availability |
-    | 800457    | W   | 800   | 1000 | 201710 | is           |
-    | 800457    | T   | 1900  | 2000 | 201710 | is not       |
-    | 926944    | W   | 800   | 1000 | 201710 | is           |
-    | 662102    | F   | 915   | 930  | 201710 | is not       |
-    | 662102    | R   | 915   | 930  | 201710 | is           |
-    | 958628    | T   | 810   | 1000 | 201710 | is not       |
-    | 958628    | M   | 1400  | 1410 | 201710 | is not       |
-    | 958628    | F   | 851   | 900  | 201710 | is           |
-    | 534162    | M   | 810   | 1700 | 201710 | is not       |
-    | 454716    | R   | 800   | 2000 | 201710 | is           |
+    | 000800457 | W   | 800   | 1000 | 201710 | is           |
+    | 000800457 | T   | 1900  | 2000 | 201710 | is not       |
+    | 000926944 | W   | 800   | 1000 | 201710 | is           |
+    | 000662102 | F   | 915   | 930  | 201710 | is not       |
+    | 000662102 | R   | 915   | 930  | 201710 | is           |
+    | 000958628 | T   | 810   | 1000 | 201710 | is not       |
+    | 000958628 | M   | 1400  | 1410 | 201710 | is not       |
+    | 000958628 | F   | 851   | 900  | 201710 | is           |
+    | 000534162 | M   | 810   | 1700 | 201710 | is not       |
+    | 000454716 | R   | 800   | 2000 | 201710 | is           |
     
 Scenario Outline: Professor Availability
     Given Professor "<name>" on "<day>" between "<start>" and "<end>" in term "<termCode>"
