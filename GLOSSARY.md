@@ -34,8 +34,7 @@
 
 **Time Code**
     An integer t where (t div 100) is the hour of the day and (t mod 100) is the minute of the day.
-    
-    For example 830 is 8:30 AM and 1530 is 3:30 PM.
+    For example: 830 is 8:30 AM and 1530 is 3:30 PM.
     
 **Time Range**
     Two time codes where the lesser one represents a start time and the greater one represents an end time.
