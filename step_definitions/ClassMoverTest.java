@@ -34,6 +34,18 @@ public class ClassMoverTest
 	    Course c = C.getCoursesMap().get(course);
 	    Assert.assertTrue(s.getCourseSet().contains(c));
 	}
+	
+	@Given("^Student \"(.*?)\" on \"(.*?)\" between \"(.*?)\" and \"(.*?)\" in term \"(.*?)\"$")
+	public void studentOnBetweenAndInTerm(String arg1, String arg2, String arg3, String arg4, String arg5) throws Throwable {
+    	// Write code here that turns the phrase above into concrete actions
+    	throw new PendingException();
+	}
+
+	@Then("^the student \"(.*?)\" available$")
+	public void theStudentAvailable(String arg1) throws Throwable {
+    	// Write code here that turns the phrase above into concrete actions
+    	throw new PendingException();
+	}
 
 }
 
