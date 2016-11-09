@@ -1,3 +1,5 @@
+**Chapel Course**  
+    The course objects that specify the 1100, 1130 time slot which every student and professor must reserve for every term.
 
 **Course**  
     The code that specifies the exact section of a course, of which a student can be enrolled. It combines Semester Code, Course Code and Course Section, such as "201310 IT101.01".
@@ -36,7 +38,7 @@
     An integer  0 &le; _t_ < 2359 where (_t_ div 100) is the hour of the day and (_t_ mod 100) is the minute of the day.  
     For example: 830 is 8:30 AM and 1530 is 3:30 PM.
     
-**Time Range**  
+**Time Slot**  
     Two time codes where the lesser one represents a start time and the greater one represents an end time.
     
 **Day**
