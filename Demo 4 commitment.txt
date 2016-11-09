@@ -1,0 +1,2 @@
+We will be able to query a course and tell if, given a time slot, the professor and/or students that have a conflicting schedule.
+We will also integrate the Chapel course as specified in the glossary.
