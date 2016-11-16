@@ -47,4 +47,5 @@ Scenario Outline: Professor Availability
     | 201710 COMP602.02 | 800   | 1050 | W   | 8      | does not  |
     | 201710 CHEM463.L1 | 1300  | 1650 | M   | 0      | does not  |
     | 201710 CHEM463.L1 | 1330	| 1720 | R   | 2      | does      |
+    | 201710 PHIL478.01 | 1300  | 1420 | TR  | 5      | does      |
 
