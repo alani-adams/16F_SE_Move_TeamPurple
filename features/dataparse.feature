@@ -51,5 +51,5 @@ Scenario Outline: Professor Availability
     | 201710 PHIL478.01 | 1300  | 1420 | R   | 5      | does      |
     | 201710 CS315.01   | 1330  | 1450 | T   | 16     | does      |
     | 201710 CS315.01   | 1330  | 1450 | R   | 16     | does      |
-    | 201710 PHIL478.01 | 1100  | 1130 | T   | 10     | does      |
+    | 201710 PHIL478.01 | 1100  | 1130 | T   | 10     | does not  |
 
