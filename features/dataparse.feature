@@ -16,7 +16,7 @@ Scenario Outline: Student Availability
     | 000958628 | M   | 1400  | 1410 | 201710 | is not       |
     | 000958628 | F   | 851   | 900  | 201710 | is           |
     | 000534162 | M   | 810   | 1700 | 201710 | is not       |
-    | 000454716 | R   | 800   | 2000 | 201710 | is           |
+    | 000454716 | R   | 1400   | 2000 | 201710 | is           |
     
 Scenario Outline: Professor Availability
     Given Professor "<name>" on "<day>" between "<start>" and "<end>" in term "<termCode>"
