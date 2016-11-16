@@ -37,7 +37,11 @@ Scenario Outline: Professor Availability
     | Houghtalen, Brandon | R   | 1000  | 1050 | 201710   | is           |
     
     
-    Scenario Outline: Professor Availability
-    Given course "<course>" and "<start>" and "<end>"
+Scenario Outline: Professor Availability
+    Given course "<course>" and "<start>" and "<end>" and "<day>"
     Then "<amount>" amount of students have a conflict and the professor "<available>" have a conflict
+
+    Examples:
+    | course            | start | end  | day | amount | available |
+    | 201710 COMP602.02 | 800   | 1050 | W   | 8      | does not  |
 
