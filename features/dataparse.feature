@@ -35,3 +35,9 @@ Scenario Outline: Professor Availability
     | Homer, John         | R   | 1330  | 1500 | 201710   | is           |
     | Houghtalen, Brandon | W   | 1115  | 1250 | 201710   | is not       |
     | Houghtalen, Brandon | R   | 1000  | 1050 | 201710   | is           |
+    
+    
+    Scenario Outline: Professor Availability
+    Given course "<course>" and "<start>" and "<end>"
+    Then "<amount>" amount of students have a conflict and the professor "<available>" have a conflict
+
