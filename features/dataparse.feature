@@ -39,7 +39,8 @@ Scenario Outline: Professor Availability
     
 Scenario Outline: Professor Availability
     Given course "<course>" and time slot "<start>" to "<end>" on "<day>"
-    Then "<amount>" amount of students have a conflict and the professor "<available>" have a conflict
+    Then "<amount>" amount of students have a conflict 
+    And the professor "<available>" have a conflict
 
     Examples:
     | course            | start | end  | day | amount | available |
