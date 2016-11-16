@@ -13,8 +13,18 @@ public class Course
 	private final String COURSE;
 	private final String TERM_CODE;
 	private final HashSet<Student> Students;
+
+
 	private final Professor Instructor;
 	private final ScheduleData CourseTimes;
+	
+	/**
+	 * @return the students
+	 */
+	public HashSet<Student> getStudents()
+	{
+		return Students;
+	}
 
 	public Course(String termcode, String course, Professor p)
 	{
@@ -23,7 +33,8 @@ public class Course
 		Instructor = p;
 		Students = new HashSet<Student>();
 		CourseTimes = new ScheduleData();
-		p.addCourse(this);
+		if(p != null || !(this instanceof ChapelCourse))
+			p.addCourse(this);
 	}
 
 

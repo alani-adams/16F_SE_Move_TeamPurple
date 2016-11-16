@@ -13,6 +13,14 @@ public class Student
 {
 	private final HashMap<String,ArrayList<Course>> Courses;
 	private final String BANNER;
+	
+	/**
+	 * @return the courses
+	 */
+	public ArrayList<Course> getCourses(String TermCode)
+	{
+		return Courses.get(TermCode);
+	}
     
 	public Student(String banner)
 	{
@@ -45,6 +53,7 @@ public class Student
 		if(!Courses.containsKey(TC))
 		{
 			Cs = new ArrayList<Course>();
+			Cs.add(new ChapelCourse());
 			Courses.put(TC, Cs);
 		}
 		else Cs = Courses.get(TC);
@@ -72,6 +81,13 @@ public class Student
 	 */
 	public boolean SlotFree(String Termcode, Day D,short ST, short ET)
 	{
+		if(!Courses.containsKey(Termcode))
+		{
+			ArrayList<Course> Cs;
+			Cs = new ArrayList<Course>();
+			Cs.add(new ChapelCourse());
+			Courses.put(Termcode, Cs);
+		}
 		for(Course c: Courses.get(Termcode))
 		{
 			if(!c.SlotFree(D,ST,ET))

@@ -2,6 +2,8 @@ package implementation;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -17,6 +19,7 @@ public class ClassMover
 	
 	public HashMap<String,Course> getCoursesMap(String termcode)
 	{
+		//Set<String> KeySet = Courses.keySet();
 		return Courses.get(termcode);
 	}
 	public HashMap<String, Student> getStudentsMap()
@@ -114,9 +117,45 @@ public class ClassMover
         
 	}
 
+	public boolean CanMoveProfessor(Course C,Day D,short StartTime,short EndTime)
+	{
+		Professor P = C.getInstructor();
+		P.getCourses(C.getTermCode()).remove(C);
+		try
+		{
+			return P.SlotFree(C.getTermCode(), D, StartTime, EndTime);
+		}
+		finally
+		{
+			P.addCourse(C);
+		}
+	}
+	
+	public HashSet<Student> GetStudentConflicts(Course C,Day D,short StartTime,short EndTime)
+	{
+		HashSet<Student> Conflicted = new HashSet<>();
+		for(Student S:C.getStudents())
+		{
+			S.getCourses(C.getTermCode()).remove(C);
+			try
+			{
+				if(! S.SlotFree(C.getTermCode(), D, StartTime, EndTime))
+				{
+					Conflicted.add(S);
+					continue;
+				}
+			}
+			finally
+			{
+				S.addCourse(C);
+			}
+		}
+		return Conflicted;
+	}
+	
 	public static void main(String... args) throws Exception
 	{
 		ClassMover Mover = new ClassMover();
-		//System.out.println(String.format("%2s", data.getDataPoint("Term Code", 1)).replaceFirst(" ","0"));
+		Mover.equals(Mover);
 	}
 }

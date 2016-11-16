@@ -21,6 +21,14 @@ public class Professor
 	}
 
 	/**
+	 * @return the courses
+	 */
+	public ArrayList<Course> getCourses(String TermCode)
+	{
+		return Courses.get(TermCode);
+	}
+
+	/**
 	 * Gets this Professor's name.
 	 * @return this Professor's name.
 	 */
