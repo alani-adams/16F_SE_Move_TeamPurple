@@ -1,3 +1,6 @@
+**Building Code**
+    A string code that specifies a building. (ex. MBB is Mabee Buisness Building)
+
 **Chapel Course**  
     The course objects that specify the 1100, 1130 time slot which every student and professor must reserve for every term.
 
@@ -16,11 +19,17 @@
 **Course Section**  
     The two digit number unique to each section of a course (the ".01" in "IT101.01").
     
+**Day**
+A one letter representaion of what day a course meets.
+    
 **Professor**  
     An entity that can teach multiple courses.
 
 **Professor Schedule**  
     A semester specific set containing all of the courses a professor is teaching. 
+    
+**Room Code**
+    A unique string, consisting of a Building Code and a 3-digit room number. (ex. MBB314)
     
 **Semester Code**  
     A two-digit numeric string that is equal to "10", "20", or "30" exclusively. These translate to Fall, Spring, and Summer semesters respectively.
@@ -40,6 +49,3 @@
     
 **Time Slot**  
     Two time codes where the lesser one represents a start time and the greater one represents an end time.
-    
-**Day**
-A one letter representaion of what day a course meets.
