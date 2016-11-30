@@ -52,4 +52,17 @@ Scenario Outline: Professor Availability
     | 201710 CS315.01   | 1330  | 1450 | T   | 16     | does      |
     | 201710 CS315.01   | 1330  | 1450 | R   | 16     | does      |
     | 201710 PHIL478.01 | 1100  | 1130 | T   | 10     | does not  |
+    
+
+Scenario Outline: Room Size
+    Given course "<course>" and "<courseSize>"
+    Then "<roomCode>" "<check>" fit this course.
+
+    Examples:
+    | course          | courseSize | roomCode | check     |
+    | 201710 CS374.01 | 19         | MBB317   | will      |
+    | 201710 CS374.01 | 19         | FAKE100  | will not  |
+    | 201710 IT220.01 | 33         | MBB215   | will      |
+    | 201710 IT220.01 | 33         | MBB317   | will not  |
+    | 201710 IT220.01 | 33         | FAKE100  | will not  |
 
