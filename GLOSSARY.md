@@ -1,4 +1,4 @@
-**Building Code**
+**Building Code**  
     A string code that specifies a building. (ex. MBB is Mabee Buisness Building)
 
 **Chapel Course**  
@@ -27,9 +27,9 @@
 
 **Professor Schedule**  
     A semester specific set containing all of the courses a professor is teaching. 
-    
-**Room Code**
-    A unique string, consisting of a Building Code and a 3-digit room number. (ex. MBB314)
+
+**Room Code**  
+    A unique string, consisting of a Building Code and a 3-digit rooom number. (ex. MBB314)
     
 **Semester Code**  
     A two-digit numeric string that is equal to "10", "20", or "30" exclusively. These translate to Fall, Spring, and Summer semesters respectively.
