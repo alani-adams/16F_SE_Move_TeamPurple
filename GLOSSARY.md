@@ -20,7 +20,7 @@
     The two digit number unique to each section of a course (the ".01" in "IT101.01").
     
 **Day**
-A one letter representaion of what day a course meets.
+    A one letter representaion of what day a course meets.
     
 **Professor**  
     An entity that can teach multiple courses.
