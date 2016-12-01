@@ -325,7 +325,7 @@ public class ClassMover
 				else
 				{
 					if(CD.Room.getMaxSize() == C.getStudents().size() - CD.StudentConflicts)
-						System.out.println(", Room exactly full");
+						System.out.print(", Room exactly full");
 					else
 						System.out.print(", Seats remaining: "+Room);
 				}
