@@ -7,7 +7,7 @@ Navigate to the root directory. To compile use command:
 
 To run it:
 
-    java implementation/ClassMover [course code (such as IT225.01) or CRN (such as 10877)]
+    java implementation/ClassMover [course code (such as IT225.01) or CRN (such as 10877)] [Optional number of options to show; defaults to 5]
 
 Test Course Codes:
     IT225.01,
