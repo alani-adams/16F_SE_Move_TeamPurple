@@ -55,7 +55,7 @@ Scenario Outline: Professor Availability
     
 
 Scenario Outline: Room Size
-    Given course "<course>"
+    Given course section "<course>"
     Then "<roomCode>" "<check>" fit this course.
 
     Examples:
