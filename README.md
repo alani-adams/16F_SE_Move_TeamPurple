@@ -1,7 +1,7 @@
 # Class Mover
 # Team Purple
 
-To compile use command:
+Navigate to the root directory. To compile use command:
 
     javac implementation/ClassMover.java
 
