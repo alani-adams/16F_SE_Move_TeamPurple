@@ -25,6 +25,11 @@ public class ClassMover
 	private static CSV data = null;
 	private static HashMap<String,Room> Rooms = null;
 	
+	public static HashMap<String,Room> getRoomsMap()
+	{
+		return Rooms;
+	}
+	
 	public HashMap<String,Course> getCoursesMap(String termcode)
 	{
 		//Set<String> KeySet = Courses.keySet();
@@ -402,7 +407,7 @@ public class ClassMover
 						return b.getMaxSize() - a.getMaxSize();
 				}
 			});
-			int i = 1;
+			int i = 0;
 			do
 			{
 				C.Room = TestRooms.get(i++);
