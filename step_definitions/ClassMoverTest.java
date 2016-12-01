@@ -90,7 +90,7 @@ public class ClassMoverTest
 	    Assert.assertTrue(arg1.equals("does") ^ C.CanMoveProfessor(TestCourse, TestDay, TestStartTime, TestEndTime));
 	}
 	@Given("^course \"(.*?)\" and \"(.*?)\"$")
-	public void courseAnd(String course, String courseSize) throws Throwable {
+	public void courseAnd(String course) throws Throwable {
     		// Write code here that turns the phrase above into concrete actions
     		throw new PendingException();
 	}
