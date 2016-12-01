@@ -13,4 +13,5 @@ Test Course Codes:
     IT225.01,
     ACCT211.02,
     CS116.01,
-    MGMT330.02
+    MGMT330.02,
+    SOCI416.02
