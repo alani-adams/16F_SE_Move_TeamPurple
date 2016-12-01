@@ -13,5 +13,6 @@ Test Course Codes:
     IT225.01,
     ACCT211.02,
     CS116.01,
-    MGMT330.02,
-    SOCI416.02
+    MGMT330.02 (shows that Seniors have priority),
+    SOCI416.02,
+    MKTG499.01 (handles a room that does not exist)
