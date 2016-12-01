@@ -90,13 +90,13 @@ public class ClassMoverTest
 	    Assert.assertTrue(arg1.equals("does") ^ C.CanMoveProfessor(TestCourse, TestDay, TestStartTime, TestEndTime));
 	}
 	@Given("^course \"(.*?)\" and \"(.*?)\"$")
-	public void courseAnd(String arg1, String arg2) throws Throwable {
+	public void courseAnd(String course, String courseSize) throws Throwable {
     		// Write code here that turns the phrase above into concrete actions
     		throw new PendingException();
 	}
 
 	@Then("^\"(.*?)\" \"(.*?)\" fit this course\\.$")
-	public void fitThisCourse(String arg1, String arg2) throws Throwable {
+	public void fitThisCourse(String rmCode, String check) throws Throwable {
     		// Write code here that turns the phrase above into concrete actions
     		throw new PendingException();
 	}
