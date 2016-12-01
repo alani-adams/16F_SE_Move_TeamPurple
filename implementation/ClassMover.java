@@ -273,7 +273,10 @@ public class ClassMover
 
 		System.out.printf(" %2d:%02d to ",C.getFirstStartTime()/100,C.getFirstStartTime()%100);
 		System.out.printf("%2d:%02d  ",C.getFirstEndTime()/100,C.getFirstEndTime()%100);
-		System.out.println("in "+C.getRoom().getRoomNumber()+")");
+		if(C.getRoom() == null)
+			System.out.println(")");
+		else
+			System.out.println("in "+C.getRoom().getRoomNumber()+")");
 		for(ConflictData CD : Cset)
 		{
 			System.out.printf("%3d:  ",++Printed);
@@ -285,7 +288,9 @@ public class ClassMover
 			System.out.printf("%2d:%02d to ",CD.StartTime/100,CD.StartTime%100);
 			System.out.printf("%2d:%02d  ",CD.EndTime/100,CD.EndTime%100);
 			
-			System.out.printf("in room %-8s(",CD.Room.getRoomNumber());
+			if(C.getRoom() != null)
+				System.out.printf("in room %-8s",CD.Room.getRoomNumber());
+			System.out.print("(");
 			
 			if(CD.StudentConflicts == 0)
 			{
