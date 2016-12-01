@@ -1,8 +1,12 @@
 package implementation;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -14,8 +18,12 @@ public class ClassMover
 {
 	private final HashMap<String,Student> Students;
 	private final HashMap<String,HashMap<String,Course>> Courses;
+	private final HashMap<String,Course> CoursesByCRN;
+	private final HashMap<String,Course> CoursesByCode;
+	
     private final HashMap<String,Professor> Professors;
 	private static CSV data = null;
+	private static HashMap<String,Room> Rooms = null;
 	
 	public HashMap<String,Course> getCoursesMap(String termcode)
 	{
@@ -31,17 +39,38 @@ public class ClassMover
 		return Professors;
 	}
 	
+	private static void initRooms() throws IOException
+	{
+		String[] columnNames = new String[] {"Room Code","Max Seats"};
+	
+		CSV RoomData = CSV.openColumns("roomData.csv",columnNames);
+	
+		for(int i = 0;i < RoomData.rowCount();i++)
+		{
+			String RC = RoomData.getDataPoint("Room Code", i);
+			int MaxSeats = Integer.parseInt(RoomData.getDataPoint("Max Seats", i));
+			
+			Rooms.put(RC, new Room(RC, MaxSeats));
+		}
+	}
+	
 	public ClassMover() throws IOException
 	{
-		Students = new HashMap<String,Student>();
-		Courses = new HashMap<String,HashMap<String,Course>>();
-		Professors = new HashMap<String,Professor>(500);
+		Rooms = new HashMap<>();
+		initRooms();
+		
+		Students = new HashMap<>();
+		Courses = new HashMap<>();
+		Professors = new HashMap<>();
+		
+		CoursesByCRN = new HashMap<>();
+		CoursesByCode = new HashMap<>();
 		
 		
 		String[] columnNames = new String[] {"Term Code", "Class Code", "Subject Code", "Course Number", "Section Number",
 											"Instructor Name", "Banner ID", "Begin Time 1", "End Time1", "Bldg Code1", "Room Code1",
 											"Monday Ind1", "Tuesday Ind1", "Wednesday Ind1", "Thursday Ind1", "Friday Ind1", "Saturday Ind1",
-											"Sunday Ind1", "Ovrall Cumm GPA  Hours Earned", "Section Max Enrollment"};
+											"Sunday Ind1", "Ovrall Cumm GPA  Hours Earned", "Section Max Enrollment","CRN"};
 		if(data == null)
 		{
 			data = CSV.openColumns("cs374_f16_anon.csv",columnNames);
@@ -62,14 +91,17 @@ public class ClassMover
             			+ "." + String.format("%2s", data.getDataPoint("Section Number", i)).replaceFirst(" ", "0");
             String bannerID = data.getDataPoint("Banner ID", i);
             String profName = data.getDataPoint("Instructor Name", i);
-            
+            String roomNum = data.getDataPoint("Bldg Code1", i) + data.getDataPoint("Room Code1", i);
             Student S;		Professor P;		Course C;
             HashMap<String,Course> Cmap;
+            
+            Room R = Rooms.get(roomNum);
+            
             
 			if(!Students.containsKey(bannerID))
 			{
 				//System.out.println("ADDED "+bannerID);
-                S = new Student(bannerID);
+                S = new Student(bannerID,data.getDataPoint("Class Code", i));
                 Students.put(bannerID, S);
 			}
             else S = Students.get(bannerID);
@@ -90,7 +122,7 @@ public class ClassMover
             	
             if(!Cmap.containsKey(Course))
             {
-                C = new Course(TermCode,Course,P);
+                C = new Course(TermCode,Course,R,P);
                 
                 boolean[] HasDay = new boolean[Day.values().length];
                 HasDay[0] = !data.getDataPoint("Sunday Ind1", i).equals("");
@@ -108,6 +140,8 @@ public class ClassMover
                 }
                 
                 Cmap.put(Course,C);
+                CoursesByCode.put(Course, C);
+                CoursesByCRN.put(data.getDataPoint("CRN", i), C);
             }
             else C = Cmap.get(Course);
                
@@ -155,7 +189,299 @@ public class ClassMover
 	
 	public static void main(String... args) throws Exception
 	{
+		if(args.length == 0 || args[0].equals("help"))
+		{
+			System.out.println("Run the program with:");
+			System.out.println("  CRN [NumberToShow]");
+			System.out.println(" or ");
+			System.out.println("  Section [NumberToShow]");
+			System.out.println();
+			System.out.println("For example:");
+			System.out.println("  10844");
+			System.out.println(" or ");
+			System.out.println("  IT220.01 20");
+			return;
+		}
+		else if(args.length > 2)
+		{
+			System.out.println("Please pass only one CRN or one Course Section in the form similar to IT211.01");
+			return;
+		}
 		ClassMover Mover = new ClassMover();
-		Mover.equals(Mover);
+		int Printed = 0;
+		
+		Course C = Mover.getCourseFromCRN(args[0]);
+		if(C == null)
+			C = Mover.getCourseFromCode(args[0]);
+		
+		if(C == null)
+		{
+			System.out.println("Data for course "+args[0]+" not found");
+			return;
+		}
+		
+		ArrayList<ConflictData> Cset =  Mover.GetPotentialSlots(C);
+		Cset.sort(new Comparator<ConflictData>() {
+			@Override
+			public int compare(ConflictData a, ConflictData b)
+			{
+				return a.Score - b.Score;
+			}
+		});
+		Cset.remove(0);
+		
+		int MaxIters = 5;
+		
+		if(args.length == 2)
+			MaxIters = Integer.parseInt(args[1]);
+		
+		MaxIters = Math.min(MaxIters, Cset.size());
+		
+		System.out.print("Top "+MaxIters+" timeslots for course "+args[0]+". (currently at ");
+		
+
+		System.out.printf("%2d:%02d to ",C.getFirstStartTime()/100,C.getFirstStartTime()%100);
+		System.out.printf("%2d:%02d  ",C.getFirstEndTime()/100,C.getFirstEndTime()%100);
+		System.out.println("in "+C.getRoom().getRoomNumber()+")");
+		for(ConflictData CD : Cset)
+		{
+			System.out.printf("%3d:  ",++Printed);
+			if(CD.Days[0] == Day.MONDAY)
+				System.out.print("MWF ");
+			else
+				System.out.print("TR  ");
+			
+			System.out.printf("%2d:%02d to ",CD.StartTime/100,CD.StartTime%100);
+			System.out.printf("%2d:%02d  ",CD.EndTime/100,CD.EndTime%100);
+			
+			System.out.printf("in room %-8s(",CD.Room.getRoomNumber());
+			
+			if(CD.StudentConflicts == 0)
+			{
+				System.out.print("No conflicts");
+			}
+			else
+			{
+				System.out.printf("%3d total conflicts:",CD.StudentConflicts);
+				if(CD.SeniorConflicts > 0)
+					System.out.print(" "+CD.SeniorConflicts+" SR");
+				if(CD.JuniorConflicts > 0)
+					System.out.print(" "+CD.JuniorConflicts+" JR");
+				if(CD.SophomoreConflicts > 0)
+					System.out.print(" "+CD.SophomoreConflicts+" SO");
+				if(CD.FreshmanConflicts > 0)
+					System.out.print(" "+CD.FreshmanConflicts+" FR");
+				if(CD.GraduateConflicts > 0)
+					System.out.print(" "+CD.FreshmanConflicts+" GR");
+				
+			}
+			
+			if(CD.SpaceExcess != 0)
+			{
+				System.out.printf(", %3d students exceed classroom",CD.SpaceExcess);
+			}
+			else
+			{
+				if(CD.Room.getMaxSize() == C.getStudents().size() - CD.StudentConflicts)
+					System.out.println(", Room exactly full");
+				else
+					System.out.print(", seats remaining: "+(CD.Room.getMaxSize() - C.getStudents().size() + CD.StudentConflicts));
+			}
+			
+			System.out.println(")");
+			//
+			if(Printed == MaxIters)
+				break;
+		}
+	}
+	
+	private Course getCourseFromCode(String string)
+	{
+		//System.out.println(CoursesByCode.keySet().iterator().next());
+		return CoursesByCode.get(string);
+	}
+	private Course getCourseFromCRN(String string)
+	{
+		//System.out.println(CoursesByCRN.keySet().iterator().next());
+		return CoursesByCRN.get(string);
+	}
+	private ArrayList<ConflictData> GetPotentialSlots(Course TestCourse)
+	{
+		ArrayList<ConflictData> CD = new ArrayList<>();
+		
+		//MWF
+		short StartTime = 800;
+		short EndTime = 850;
+		while(EndTime < 1700)
+		{
+			//System.out.println(StartTime+"->"+EndTime);
+			StartTime = (short)((StartTime % 100 == 30)?StartTime+70:StartTime+30);
+			EndTime = (short)((EndTime % 100 == 50)?EndTime+70:EndTime+30);
+			
+			Day[] Ds = new Day[] {Day.MONDAY, Day.WEDNESDAY, Day.FRIDAY};
+			ConflictData C = TestSlots(TestCourse,Ds,StartTime,EndTime);
+			if(C != null)
+				CD.add(C);
+		}
+		
+		//TR
+		StartTime = 800;
+		EndTime = 920;
+		while(EndTime < 1700)
+		{
+			//System.out.println(StartTime+"->"+EndTime);
+			StartTime = (short)((StartTime % 100 == 30)?StartTime+70:StartTime+30);
+			EndTime = (short)((EndTime % 100 == 50)?EndTime+70:EndTime+30);
+			
+			Day[] Ds = new Day[] {Day.TUESDAY, Day.THURSDAY};
+			ConflictData C = TestSlots(TestCourse,Ds,StartTime,EndTime);
+			if(C != null)
+				CD.add(C);
+		}
+		return CD;
+	}
+	
+	private ConflictData TestSlots(Course TestCourse, Day[] Ds, short StartTime, short EndTime)
+	{
+		for(Day D:Ds)
+		{
+			if(!CanMoveProfessor(TestCourse, D, StartTime, EndTime))
+				return null;
+		}
+		
+		ConflictData C = new ConflictData(StartTime,EndTime,0,Ds);
+		
+		HashSet<Student> ConStu = new HashSet<>();
+		ArrayList<Student> AllStu = new ArrayList<Student>();
+		
+		for(Student S:TestCourse.getStudents())
+			AllStu.add(S);
+		
+		for(Day D:Ds)
+			for(Student S : GetStudentConflicts(TestCourse, D, StartTime, EndTime))
+				ConStu.add(S);
+			
+		AllStu.sort(new Comparator<Student>(){
+			@Override
+			public int compare(Student a, Student b)
+			{
+				return a.getClassification().Weight - b.getClassification().Weight;
+			}
+		});
+		
+		int RoomSize = Integer.MAX_VALUE;
+		if(TestCourse.getRoom() != null)
+		{
+			ArrayList<Room> TestRooms = new ArrayList<>();
+			
+			TestCourse.getRoom().removeCourse(TestCourse);
+			for(Map.Entry<String,Room> R: Rooms.entrySet())
+			{
+				Room Rm = R.getValue();
+				
+				for(Day D: C.Days)
+				{
+					if(!Rm.SlotFree(D, C.StartTime, C.EndTime))
+						continue;
+				}
+				TestRooms.add(Rm);
+			
+			}
+			TestCourse.getRoom().addCourse(TestCourse);
+			
+			final Room OrigRoom = TestCourse.getRoom();
+			TestRooms.sort(new Comparator<Room>(){
+				@Override
+				public int compare(Room a, Room b)
+				{
+					if(b == OrigRoom)
+						return 1;
+					else if(a == OrigRoom)
+						return -1;
+					else
+						return b.getMaxSize() - a.getMaxSize();
+				}
+			});
+			int i = 1;
+			do
+			{
+				C.Room = TestRooms.get(i++);
+				if(i == TestRooms.size() || TestRooms.get(i).getMaxSize() < AllStu.size()-ConStu.size())
+					break;
+			}
+			while(C.Room != OrigRoom);
+			RoomSize = C.Room.getMaxSize();
+		}
+		
+		int i = 0;
+		while(AllStu.size() - ConStu.size() - C.SpaceExcess > RoomSize)
+		{
+			Student CurStu = AllStu.get(i);
+			if(ConStu.contains(CurStu))
+			{
+				i++; continue;
+			}
+			
+			C.SpaceExcess++;
+			C.Score += CurStu.getClassification().Weight;
+			//
+			i++;
+		}
+		
+		for(Student S : ConStu)
+		{
+			Classification SC = S.getClassification();
+			C.Score += SC.Weight;
+			
+			C.StudentConflicts++;
+			
+			switch(SC)
+			{
+				case FRESHMAN:
+					C.FreshmanConflicts++;
+					break;
+				case SOPHOMORE:
+					C.SophomoreConflicts++;
+					break;
+				case JUNIOR:
+					C.JuniorConflicts++;
+					break;
+				case SENIOR:
+					C.SeniorConflicts++;
+					break;
+				case GRADUATE:
+					C.GraduateConflicts++;
+					break;
+			}
+		}
+		return C;
 	}
 }
+
+class ConflictData
+{
+	public short StartTime;
+	public short EndTime;
+	public Room Room;
+	
+	public int StudentConflicts;
+	public int FreshmanConflicts;
+	public int SophomoreConflicts;
+	public int JuniorConflicts;
+	public int SeniorConflicts;
+	public int GraduateConflicts;
+	
+	public int SpaceExcess;
+	
+	public Day[] Days;
+	public int Score;
+	
+	public ConflictData(short ST,short ET, int Sc,Day... D)
+	{
+		StartTime = ST;
+		EndTime = ET;
+		Score = Sc;
+		Days = D;
+	}
+}
+

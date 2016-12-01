@@ -12,6 +12,7 @@ public class Course
 {
 	private final String COURSE;
 	private final String TERM_CODE;
+	private final Room ROOM;
 	private final HashSet<Student> Students;
 
 
@@ -26,10 +27,15 @@ public class Course
 		return Students;
 	}
 
-	public Course(String termcode, String course, Professor p)
+	public Course(String termcode, String course, Room R, Professor p)
 	{
 		TERM_CODE = termcode;
 		COURSE = course;
+		ROOM = R;
+		
+		if(R != null)
+			R.addCourse(this);
+		
 		Instructor = p;
 		Students = new HashSet<Student>();
 		CourseTimes = new ScheduleData();
@@ -87,6 +93,10 @@ public class Course
 	{
 		return CourseTimes.getFirstStartTime();
 	}
+	public int getFirstEndTime()
+	{
+		return CourseTimes.getFirstEndTime();
+	}
 
 
 	public static Comparator<Course> comparator()
@@ -112,6 +122,14 @@ public class Course
 	public boolean SlotFree(Day D, short ST, short ET)
 	{
 		return CourseTimes.SlotFree(D,ST,ET);
+	}
+
+	/**
+	 * @return the room
+	 */
+	public Room getRoom()
+	{
+		return ROOM;
 	}
 
 }

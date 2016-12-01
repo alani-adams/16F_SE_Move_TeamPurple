@@ -51,6 +51,16 @@ public class ScheduleData
 		else
 			return (T.StartTime > ET) || (T.EndTime < ST);
 	}
+
+	public int getFirstEndTime()
+	{
+		for(int i = 0;i < Day.values().length;i++)
+		{
+			if(Data[i] != null)
+				return Data[i].EndTime;
+		}
+		throw new IllegalStateException("No end time found.");
+	}
 }
 
 class TimeRange

@@ -13,6 +13,7 @@ public class Student
 {
 	private final HashMap<String,ArrayList<Course>> Courses;
 	private final String BANNER;
+	private final Classification Class;
 	
 	/**
 	 * @return the courses
@@ -22,10 +23,30 @@ public class Student
 		return Courses.get(TermCode);
 	}
     
-	public Student(String banner)
+	public Student(String banner,String C)
 	{
 		BANNER = banner;
 		Courses = new HashMap<String,ArrayList<Course>>();
+		switch(C)
+		{
+			case "FR":
+				Class = Classification.FRESHMAN;
+				break;
+			case "SO":
+				Class = Classification.SOPHOMORE;
+				break;
+			case "JR":
+				Class = Classification.JUNIOR;
+				break;
+			case "SR":
+				Class = Classification.SENIOR;
+				break;
+			case "GR":
+				Class = Classification.GRADUATE;
+				break;
+			default:
+				Class = null;
+		}
 	}
 
 	/**
@@ -96,5 +117,10 @@ public class Student
 			}
 		}
 		return true;
+	}
+
+	public Classification getClassification()
+	{
+		return Class;
 	}
 }
