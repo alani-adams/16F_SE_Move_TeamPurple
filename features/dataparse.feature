@@ -59,10 +59,9 @@ Scenario Outline: Room Size
     Then "<roomCode>" "<check>" fit this course.
 
     Examples:
-    | course          | courseSize | check     |
-    | 201710 CS374.01 | 19         | will      |
-    | 201710 CS374.01 | 19         | will not  |
-    | 201710 IT220.01 | 33         | will      |
-    | 201710 IT220.01 | 33         | will not  |
-    | 201710 IT220.01 | 33         | will not  |
-
+    | course          | roomCode | check     |
+    | 201710 CS374.01 | MBB317   | will      |
+    | 201710 CS374.01 | FAKE100  | will not  |
+    | 201710 IT220.01 | MBB215   | will      |
+    | 201710 IT220.01 | MBB317   | will not  |
+    | 201710 IT220.01 | FAKE100  | will not  |
