@@ -1,7 +1,10 @@
 # Class Mover
 # Team Purple
 
-To compile use commands:
+To compile use command:
+
     javac implementation/ClassMover.java
-    
-    java implementation/ClassMover 
+
+To run it:
+
+    java implementation/ClassMover [course code, such as IT225.01]
