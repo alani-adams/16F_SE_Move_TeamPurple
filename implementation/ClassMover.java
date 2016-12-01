@@ -233,7 +233,7 @@ public class ClassMover
 				return a.Score - b.Score;
 			}
 		});
-		Cset.remove(0);
+		//Cset.remove(0);
 		
 		int MaxIters = 5;
 		
@@ -242,10 +242,36 @@ public class ClassMover
 		
 		MaxIters = Math.min(MaxIters, Cset.size());
 		
-		System.out.print("Top "+MaxIters+" timeslots for course "+args[0]+". (currently at ");
+		System.out.print("Top "+MaxIters+" timeslots for course "+args[0]+". (currently ");
 		
+		for(int i = 0;i < 7;i++)
+		{
+			Day D = Day.values()[i];
+			if(!C.SlotFree(D, (short)800, (short)1700))
+			{
+				char ToPrint = 'X';
+				switch(D)
+				{
+					case SUNDAY:
+						ToPrint = 'U'; break;
+					case MONDAY:
+						ToPrint = 'M'; break;
+					case TUESDAY:
+						ToPrint = 'T'; break;
+					case WEDNESDAY:
+						ToPrint = 'W'; break;
+					case THURSDAY:
+						ToPrint = 'R'; break;
+					case FRIDAY:
+						ToPrint = 'F'; break;
+					case SATURDAY:
+						ToPrint = 'S'; break;
+				}
+				System.out.print(ToPrint);
+			}
+		}
 
-		System.out.printf("%2d:%02d to ",C.getFirstStartTime()/100,C.getFirstStartTime()%100);
+		System.out.printf(" %2d:%02d to ",C.getFirstStartTime()/100,C.getFirstStartTime()%100);
 		System.out.printf("%2d:%02d  ",C.getFirstEndTime()/100,C.getFirstEndTime()%100);
 		System.out.println("in "+C.getRoom().getRoomNumber()+")");
 		for(ConflictData CD : Cset)
@@ -280,19 +306,25 @@ public class ClassMover
 					System.out.print(" "+CD.FreshmanConflicts+" GR");
 				
 			}
-			
-			if(CD.SpaceExcess != 0)
+			if(CD.Room != null)
 			{
-				System.out.printf(", %3d students exceed classroom",CD.SpaceExcess);
-			}
-			else
-			{
-				if(CD.Room.getMaxSize() == C.getStudents().size() - CD.StudentConflicts)
-					System.out.println(", Room exactly full");
+				int Room = CD.Room.getMaxSize() + (-C.getStudents().size()) + CD.StudentConflicts;
+				if(CD.SpaceExcess != 0)
+				{
+					System.out.print(", Students that can't fit: "+CD.SpaceExcess);
+				}
+				else if(Room < 0)
+				{
+					System.out.print(", Students that can't fit: "+ -Room);
+				}
 				else
-					System.out.print(", seats remaining: "+(CD.Room.getMaxSize() - C.getStudents().size() + CD.StudentConflicts));
+				{
+					if(CD.Room.getMaxSize() == C.getStudents().size() - CD.StudentConflicts)
+						System.out.println(", Room exactly full");
+					else
+						System.out.print(", Seats remaining: "+Room);
+				}
 			}
-			
 			System.out.println(")");
 			//
 			if(Printed == MaxIters)
@@ -325,7 +357,7 @@ public class ClassMover
 			
 			Day[] Ds = new Day[] {Day.MONDAY, Day.WEDNESDAY, Day.FRIDAY};
 			ConflictData C = TestSlots(TestCourse,Ds,StartTime,EndTime);
-			if(C != null)
+			if(C != null && !(TestCourse.getFirstStartTime() == StartTime && TestCourse.getFirstEndTime() == EndTime))
 				CD.add(C);
 		}
 		
@@ -340,7 +372,8 @@ public class ClassMover
 			
 			Day[] Ds = new Day[] {Day.TUESDAY, Day.THURSDAY};
 			ConflictData C = TestSlots(TestCourse,Ds,StartTime,EndTime);
-			if(C != null)
+
+			if(C != null && !(TestCourse.getFirstStartTime() == StartTime && TestCourse.getFirstEndTime() == EndTime))
 				CD.add(C);
 		}
 		return CD;
@@ -360,7 +393,10 @@ public class ClassMover
 		ArrayList<Student> AllStu = new ArrayList<Student>();
 		
 		for(Student S:TestCourse.getStudents())
-			AllStu.add(S);
+		{
+			if(S.getClassification() != null)
+				AllStu.add(S);
+		}
 		
 		for(Day D:Ds)
 			for(Student S : GetStudentConflicts(TestCourse, D, StartTime, EndTime))
@@ -436,28 +472,31 @@ public class ClassMover
 		for(Student S : ConStu)
 		{
 			Classification SC = S.getClassification();
-			C.Score += SC.Weight;
+			if(SC == null)
+				C.Score += Classification.FRESHMAN.Weight;
+			else
+				C.Score += SC.Weight;
 			
 			C.StudentConflicts++;
-			
-			switch(SC)
-			{
-				case FRESHMAN:
-					C.FreshmanConflicts++;
-					break;
-				case SOPHOMORE:
-					C.SophomoreConflicts++;
-					break;
-				case JUNIOR:
-					C.JuniorConflicts++;
-					break;
-				case SENIOR:
-					C.SeniorConflicts++;
-					break;
-				case GRADUATE:
-					C.GraduateConflicts++;
-					break;
-			}
+			if(SC != null)
+				switch(SC)
+				{
+					case FRESHMAN:
+						C.FreshmanConflicts++;
+						break;
+					case SOPHOMORE:
+						C.SophomoreConflicts++;
+						break;
+					case JUNIOR:
+						C.JuniorConflicts++;
+						break;
+					case SENIOR:
+						C.SeniorConflicts++;
+						break;
+					case GRADUATE:
+						C.GraduateConflicts++;
+						break;
+				}
 		}
 		return C;
 	}
