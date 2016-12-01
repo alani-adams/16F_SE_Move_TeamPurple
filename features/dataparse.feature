@@ -55,14 +55,14 @@ Scenario Outline: Professor Availability
     
 
 Scenario Outline: Room Size
-    Given course "<course>" and "<courseSize>"
+    Given course "<course>"
     Then "<roomCode>" "<check>" fit this course.
 
     Examples:
-    | course          | courseSize | roomCode | check     |
-    | 201710 CS374.01 | 19         | MBB317   | will      |
-    | 201710 CS374.01 | 19         | FAKE100  | will not  |
-    | 201710 IT220.01 | 33         | MBB215   | will      |
-    | 201710 IT220.01 | 33         | MBB317   | will not  |
-    | 201710 IT220.01 | 33         | FAKE100  | will not  |
+    | course          | courseSize | check     |
+    | 201710 CS374.01 | 19         | will      |
+    | 201710 CS374.01 | 19         | will not  |
+    | 201710 IT220.01 | 33         | will      |
+    | 201710 IT220.01 | 33         | will not  |
+    | 201710 IT220.01 | 33         | will not  |
 
