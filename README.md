@@ -7,7 +7,7 @@ Navigate to the root directory. To compile use command:
 
 To run it:
 
-    java implementation/ClassMover [course code, such as IT225.01]
+    java implementation/ClassMover [course code (such as IT225.01) or CRN (such as 10877)]
 
 Test Course Codes:
     IT225.01,
@@ -16,3 +16,7 @@ Test Course Codes:
     MGMT330.02 (shows that Seniors have priority),
     SOCI416.02,
     MKTG499.01 (handles a room that does not exist)
+    
+Test CRNs:
+    11392 (shows several no conflict solutions),
+    10902 (same as ACCT211.02)
