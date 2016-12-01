@@ -89,17 +89,23 @@ public class ClassMoverTest
 		//System.out.println(C.CanMoveProfessor(TestCourse, TestDay, TestStartTime, TestEndTime));
 	    Assert.assertTrue(arg1.equals("does") ^ C.CanMoveProfessor(TestCourse, TestDay, TestStartTime, TestEndTime));
 	}
-	@Given("^course \"(.*?)\" and \"(.*?)\"$")
-	public void courseAnd(String course) throws Throwable {
-    		// Write code here that turns the phrase above into concrete actions
-    		throw new PendingException();
+
+	@Given("^course section \"(.*?)\"$")
+	public void course(String arg1) throws Throwable {
+		String[] Data = arg1.split(" ");
+		HashMap<String,Course> Cmap = C.getCoursesMap(Data[0]);
+	    TestCourse = Cmap.get(Data[1]);
+	    Assert.assertNotNull(TestCourse);
+	}
+	
+	@Then("^\"(.*?)\" \"(.*?)\" fit this course\\.$")
+	public void fit_this_course(String arg1, String arg2) throws Throwable
+	{
+	    
+		Assert.assertTrue(arg2.equals("will not") ^ 
+				(ClassMover.getRoomsMap().get(arg1).getMaxSize() >= TestCourse.getStudents().size()));
 	}
 
-	@Then("^\"(.*?)\" \"(.*?)\" fit this course\\.$")
-	public void fitThisCourse(String rmCode, String check) throws Throwable {
-    		// Write code here that turns the phrase above into concrete actions
-    		throw new PendingException();
-	}
 }
 
 /**
